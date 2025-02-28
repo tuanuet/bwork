@@ -1,0 +1,49 @@
+syntax = "proto3";
+package shard;
+
+option go_package = "github.com/tuanuet/bwork/managerpb";
+
+service ShardService {
+  rpc GetRecordsForNode (NodeRequest) returns (RecordsResponse) {}
+  rpc SubscribeRebalance (NodeRequest) returns (stream RebalanceEvent) {}
+  rpc RegisterNode (NodeRequest) returns (RegisterResponse) {}
+  rpc Ping (PingRequest) returns (PingResponse) {}
+  rpc RemoveRecord (RemoveRecordRequest) returns (RemoveRecordResponse) {}
+}
+
+message RemoveRecordRequest {
+  string record_id = 1;
+}
+
+message RemoveRecordResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message NodeRequest {
+  string node_id = 1;
+}
+
+message RegisterResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message PingRequest {
+  string node_id = 1;
+}
+
+message PingResponse {
+  bool success = 1;
+}
+
+message Record {
+  string record_id = 1;
+}
+
+message RecordsResponse {
+  repeated Record records = 1;
+}
+
+message RebalanceEvent {
+}
